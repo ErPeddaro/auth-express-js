@@ -17,7 +17,7 @@ router.post("/login", async (req, res) => {
 	try {
 		const user = await User.findOne({ username });
 		if (!user) {
-			return res.status(401).json({ message: "Invalid username" });
+			return res.status(401).json({ message: "Invalid username or password" });
 		}
 
 		const isMatch = await bcrypt.compare(
@@ -34,7 +34,7 @@ router.post("/login", async (req, res) => {
 			);
 			res.status(200).json({ token });
 		} else {
-			res.status(401).json({ message: "Invalid password" });
+			res.status(401).json({ message: "Invalid username or password" });
 		}
 	} catch (error) {
 		res.status(500).json({ message: error.message });
